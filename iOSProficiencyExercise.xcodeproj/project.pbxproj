@@ -15,6 +15,8 @@
 		14DE1B8F20BBA9A500ACDFD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DE1B8E20BBA9A500ACDFD2 /* main.m */; };
 		14DE1B9920BBA9A500ACDFD2 /* iOSProficiencyExerciseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DE1B9820BBA9A500ACDFD2 /* iOSProficiencyExerciseTests.m */; };
 		14DE1BA420BBA9A500ACDFD2 /* iOSProficiencyExerciseUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DE1BA320BBA9A500ACDFD2 /* iOSProficiencyExerciseUITests.m */; };
+		14DE1BB420BBACF200ACDFD2 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DE1BB220BBACF200ACDFD2 /* MBProgressHUD.m */; };
+		14DE1BB720BBD22E00ACDFD2 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DE1BB620BBD22E00ACDFD2 /* CollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,10 @@
 		14DE1B9F20BBA9A500ACDFD2 /* iOSProficiencyExerciseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSProficiencyExerciseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DE1BA320BBA9A500ACDFD2 /* iOSProficiencyExerciseUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSProficiencyExerciseUITests.m; sourceTree = "<group>"; };
 		14DE1BA520BBA9A500ACDFD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14DE1BB220BBACF200ACDFD2 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		14DE1BB320BBACF200ACDFD2 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		14DE1BB520BBD22E00ACDFD2 /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		14DE1BB620BBD22E00ACDFD2 /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,9 @@
 				14DE1B8A20BBA9A500ACDFD2 /* LaunchScreen.storyboard */,
 				14DE1B8D20BBA9A500ACDFD2 /* Info.plist */,
 				14DE1B8E20BBA9A500ACDFD2 /* main.m */,
+				14DE1BB120BBACDF00ACDFD2 /* MBProgressHUD */,
+				14DE1BB520BBD22E00ACDFD2 /* CollectionViewController.h */,
+				14DE1BB620BBD22E00ACDFD2 /* CollectionViewController.m */,
 			);
 			path = iOSProficiencyExercise;
 			sourceTree = "<group>";
@@ -130,6 +139,15 @@
 				14DE1BA520BBA9A500ACDFD2 /* Info.plist */,
 			);
 			path = iOSProficiencyExerciseUITests;
+			sourceTree = "<group>";
+		};
+		14DE1BB120BBACDF00ACDFD2 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				14DE1BB320BBACF200ACDFD2 /* MBProgressHUD.h */,
+				14DE1BB220BBACF200ACDFD2 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +283,8 @@
 				14DE1B8420BBA9A200ACDFD2 /* ViewController.m in Sources */,
 				14DE1B8F20BBA9A500ACDFD2 /* main.m in Sources */,
 				14DE1B8120BBA9A200ACDFD2 /* AppDelegate.m in Sources */,
+				14DE1BB720BBD22E00ACDFD2 /* CollectionViewController.m in Sources */,
+				14DE1BB420BBACF200ACDFD2 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

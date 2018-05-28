@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CollectionViewController.h
 //  iOSProficiencyExercise
 //
 //  Created by Arnel Perez on 28/05/2018.
@@ -9,10 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 
-@interface ViewController : UIViewController
+@interface CollectionViewController : UICollectionViewController
 {
     MBProgressHUD *HUB;
 }
-
 @end
-
