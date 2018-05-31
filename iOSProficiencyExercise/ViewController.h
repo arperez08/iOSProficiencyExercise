@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     MBProgressHUD *HUB;
+    NSMutableArray *arrayRows;
 }
-
+@property (strong, nonatomic)  NSMutableArray *arrayRows;
 @end
 

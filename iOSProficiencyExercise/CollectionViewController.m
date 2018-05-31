@@ -7,25 +7,29 @@
 //
 
 #import "CollectionViewController.h"
+#import "DetailsViewController.h"
 
 @interface CollectionViewController ()
 
 @end
 
 @implementation CollectionViewController
+@synthesize arrayRows, collectionViewMain;
 
-static NSString * const reuseIdentifier = @"Cell";
-
+static NSString * const reuseIdentifier = @"RowsCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
     // Do any additional setup after loading the view.
+    
+    [collectionViewMain setDataSource:self];
+    [collectionViewMain setDelegate:self];
+    
+    UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout *)self.collectionViewMain.collectionViewLayout;
+    collectionViewLayout.sectionInset = UIEdgeInsetsMake(20, 0, 20, 0); //top 20, left, bottom 20, right
     
     HUB = [[MBProgressHUD alloc]initWithView:self.view];
     [self.view addSubview:HUB];
@@ -38,7 +42,6 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void) callWebserviceURL{
-    
     NSError * error = nil;
     NSString *jsonString = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json"] encoding:NSASCIIStringEncoding error:&error];
     
@@ -49,9 +52,11 @@ static NSString * const reuseIdentifier = @"Cell";
         
         NSMutableDictionary *dictData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
-        NSMutableArray *arrayRows = [dictData objectForKey:@"rows"];
+        arrayRows = [dictData objectForKey:@"rows"];
         NSString *strTitle = [dictData objectForKey:@"title"];
         self.title = strTitle;
+    
+        [self.collectionViewMain reloadData];
     }
 }
 
@@ -67,27 +72,74 @@ static NSString * const reuseIdentifier = @"Cell";
 */
 
 #pragma mark <UICollectionViewDataSource>
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+// Section for Item Count...
+- (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return [arrayRows count];
 }
 
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
-    return 0;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+// CollectionViewCell Item Create...
+- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [self.collectionViewMain dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
-    // Configure the cell
+    NSMutableDictionary *dictDetails = [arrayRows objectAtIndex:indexPath.row];
+    NSString *title = [dictDetails objectForKey:@"title"];
+    NSString *description = [dictDetails objectForKey:@"description"];
+    
+    NSString *imageHref = [dictDetails objectForKey:@"imageHref"];
+    if ((id)imageHref != [NSNull null]){
+        NSLog(@"photoURL: %@",imageHref);
+        NSURL* url = [NSURL URLWithString:imageHref];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+        request.HTTPMethod = @"GET";
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse * response,
+                                                   NSData * data,
+                                                   NSError * error) {
+                                   if (!error){
+                                        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, cell.contentView.frame.size.height - 50)];
+                                       
+                                       imgView.image = [UIImage imageWithData:data];
+                                       [cell.contentView addSubview:imgView];
+                                   }
+                               }];
+    }
+    else{
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, cell.contentView.frame.size.height - 50)];
+        imgView.image = nil;
+        [cell.contentView addSubview:imgView];
+    }
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, cell.contentView.frame.size.height - 50, cell.contentView.frame.size.width, 50)];
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    if ((id)title != [NSNull null]){
+        label.text = title;
+    }
+    else{
+        label.text = @"";
+    }
+    
+    [cell.contentView addSubview:label];
     
     return cell;
 }
 
 #pragma mark <UICollectionViewDelegate>
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSMutableDictionary *dictDetails = [arrayRows objectAtIndex:indexPath.row];
+    
+    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DetailsViewController *controller = (DetailsViewController *)[storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
+    controller.dictData = dictDetails;
+    
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking
