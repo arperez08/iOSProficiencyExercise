@@ -7,7 +7,7 @@
 //
 
 #import "CollectionViewController.h"
-#import "DetailsViewController.h"
+#import "DetailsCollectionViewController.h"
 
 @interface CollectionViewController ()
 
@@ -16,7 +16,6 @@
 @implementation CollectionViewController
 @synthesize arrayRows, collectionViewMain;
 
-static NSString * const reuseIdentifier = @"RowsCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -133,7 +132,7 @@ static NSString * const reuseIdentifier = @"RowsCollectionViewCell";
     NSMutableDictionary *dictDetails = [arrayRows objectAtIndex:indexPath.row];
     
     UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    DetailsViewController *controller = (DetailsViewController *)[storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
+    DetailsCollectionViewController *controller = (DetailsCollectionViewController *)[storyboard instantiateViewControllerWithIdentifier:@"DetailsCollectionViewController"];
     controller.dictData = dictDetails;
     
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
@@ -170,4 +169,11 @@ static NSString * const reuseIdentifier = @"RowsCollectionViewCell";
 }
 */
 
+- (IBAction)btnRefresh:(id)sender {
+    HUB = [[MBProgressHUD alloc]initWithView:self.view];
+    [self.view addSubview:HUB];
+    [HUB showWhileExecuting:@selector(callWebserviceURL) onTarget:self withObject:nil animated:YES];
+
+    [collectionViewMain reloadData];
+}
 @end

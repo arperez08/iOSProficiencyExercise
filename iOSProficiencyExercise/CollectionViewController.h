@@ -18,4 +18,7 @@
 @property (strong, nonatomic)  NSMutableArray *arrayRows;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewMain;
 
+- (IBAction)btnRefresh:(id)sender;
+
+
 @end
